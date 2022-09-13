@@ -24,10 +24,4 @@ thoughtSchema
 
 const Thought = model('Thought', thoughtSchema);
 
-Thought.create([
-    { thoughtText: 'wewefwef', username: 'bob33', reactions: [{ reactionBody: 'fwefwefweg', username: 'bob44' }] }
-])
-
-
-
 module.exports = Thought;

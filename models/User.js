@@ -28,17 +28,5 @@ userSchema
   });
 
 const User = model('User', userSchema);
-
-User.create([
-  { username: 'bob33', email: 'bob33@gmail.com' },
-  { username: 'bob44', email: 'bob44@gmail.com' },
-  { username: 'theo49', email: 'theo@gmail.com' },
-  { username: 'paul402', email: 'paul@gmail.com' },
-  { username: 'fred22', email: 'fred@gmail.com' },
-  { username: 'young04', email: 'young@gmail.com' },
-  { username: 'rhett39', email: 'rhett@gmail.com' }
-]);
-
-
   
 module.exports = User;
