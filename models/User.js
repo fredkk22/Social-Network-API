@@ -1,6 +1,6 @@
-const mongoose = require('mongoose');
+const { Schema, model } = require('mongoose');
 
-const userSchema = new mongoose.Schema(
+const userSchema = new Schema(
   {
     username: { type: String, unique: true, required: true, trimmed: true },
     email: { type: String, unique: false, required: true, match: /.+\@.+\..+/ },
@@ -22,7 +22,7 @@ const userSchema = new mongoose.Schema(
 );
 
 // Using mongoose.model() to compile a model based on the schema 'bookSchema'
-const User = mongoose.model('User', userSchema);
+const User = model('User', userSchema);
 
 // Create new instances of the model, a document
 User.create([
