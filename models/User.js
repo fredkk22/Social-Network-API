@@ -15,16 +15,20 @@ const userSchema = new Schema(
   },
   {
     tJSON: {
-      virtual: true
+      virtuals: true
     },
     id: false
   }
 );
 
-// Using mongoose.model() to compile a model based on the schema 'bookSchema'
+userSchema
+  .virtual('friendCount')
+  .get(function () {
+    return this.friends.length;
+  });
+
 const User = model('User', userSchema);
 
-// Create new instances of the model, a document
 User.create([
   { username: 'bob33', email: 'bob33@gmail.com' },
   { username: 'bob44', email: 'bob44@gmail.com' },
@@ -35,10 +39,6 @@ User.create([
   { username: 'rhett39', email: 'rhett@gmail.com' }
 ]);
 
-userSchema
-  .virtual('friendCount')
-  .get(function () {
-    return this.friends.length;
-  });
+
   
 module.exports = User;
