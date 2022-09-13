@@ -19,10 +19,9 @@ module.exports = {
   },
   createThought(req, res) {
     Thought.create(req.body)
-      .select('-__v')
       .then((thought) => {
         return User.findOneAndUpdate(
-          { _id: req.body.userId },
+          { username: req.body.username },
           { $addToSet: { thoughts: thought._id } },
           { new: true }
         );
@@ -30,7 +29,7 @@ module.exports = {
       .then((user) =>
         !user
           ? res.status(404).json({
-            message: 'Thought created, but found no user with that ID',
+            message: 'Thought created, but found no user with that name',
           })
           : res.json('Created the thought 🎉')
       )
@@ -80,7 +79,7 @@ module.exports = {
   // TODO: Add comments to the functionality of the addTag method
   addReaction(req, res) {
     Thought.findOneAndUpdate(
-      { _id: req.params.ThoughtId },
+      { _id: req.params.thoughtId },
       { $addToSet: { reactions: req.body } },
       { runValidators: true, new: true }
     )
@@ -94,7 +93,7 @@ module.exports = {
   },
   deleteReaction(req, res) {
     Thought.findOneAndUpdate(
-      { _id: req.params.ThoughtId },
+      { _id: req.params.thoughtId },
       { $pull: { reactions: { reactionId: req.params.reactionId } } },
       { runValidators: true, new: true }
     )
