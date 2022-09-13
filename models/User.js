@@ -1,11 +1,25 @@
 const mongoose = require('mongoose');
 
-const userSchema = new mongoose.Schema({
-  username: { type: String, unique: true, required: true, trimmed: true },
-  email: { type: String, unique: false, required: true, match: /.+\@.+\..+/ },
-  thoughts: [Thought],
-  friends: [User]
-});
+const userSchema = new mongoose.Schema(
+  {
+    username: { type: String, unique: true, required: true, trimmed: true },
+    email: { type: String, unique: false, required: true, match: /.+\@.+\..+/ },
+    thoughts: [{
+      type: Schema.Types.ObjectId,
+      ref: 'Thought',
+    }],
+    friends: [{
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+    }]
+  },
+  {
+    tJSON: {
+      virtual: true
+    },
+    id: false
+  }
+);
 
 // Using mongoose.model() to compile a model based on the schema 'bookSchema'
 const User = mongoose.model('User', userSchema);
@@ -21,4 +35,10 @@ User.create([
   { username: 'rhett39', email: 'rhett@gmail.com' }
 ]);
 
+userSchema
+  .virtual('friendCount')
+  .get(function () {
+    return this.friends.length;
+  });
+  
 module.exports = User;
